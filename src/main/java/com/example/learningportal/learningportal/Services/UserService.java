@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.learningportal.learningportal.DTO.UserDTO;
 import com.example.learningportal.learningportal.Entities.User;
+import com.example.learningportal.learningportal.Mappers.UserPopulator;
 import com.example.learningportal.learningportal.Repositories.UserRepository;
 
 @Service
@@ -14,7 +15,7 @@ public class UserService {
 	UserRepository userRepository;
 
 	public User addUser(UserDTO userDTO) {
-
-		return null;
+		User user = UserPopulator.INSTANCE.populateUser(userDTO);
+		return userRepository.save(user);
 	}
 }
