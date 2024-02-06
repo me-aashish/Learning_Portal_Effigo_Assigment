@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.learningportal.learningportal.DTO.UserDTO;
+import com.example.learningportal.learningportal.DTO.UserResponseDTO;
 import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Mappers.UserPopulator;
 import com.example.learningportal.learningportal.Repositories.UserRepository;
@@ -17,9 +18,11 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	public User addUser(UserDTO userDTO) {
+	public UserResponseDTO addUser(UserDTO userDTO) {
 		User user = UserPopulator.INSTANCE.populateUser(userDTO);
-		return userRepository.save(user);
+		userRepository.save(user);
+		UserResponseDTO userResponseDTO = UserPopulator.INSTANCE.userEntityToDTO(user);
+		return userResponseDTO;
 	}
 
 	public User getAuthorByIdAndRole(int authorId, String str) {

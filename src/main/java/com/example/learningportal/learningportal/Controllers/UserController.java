@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.learningportal.learningportal.DTO.UserDTO;
+import com.example.learningportal.learningportal.DTO.UserResponseDTO;
 import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Services.UserService;
 
@@ -27,7 +28,7 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping("/users")
-	public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserDTO userDTO) {
 		log.info("request body", userDTO);
 		return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.CREATED);
 	}
