@@ -1,6 +1,7 @@
 package com.example.learningportal.learningportal.Controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.learningportal.learningportal.DTO.UserDTO;
 import com.example.learningportal.learningportal.DTO.UserResponseDTO;
-import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Services.UserService;
 
 @RestController
@@ -34,8 +34,8 @@ public class UserController {
 	}
 
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getUsers() {
-		List<User> users = userService.getUsers();
+	public ResponseEntity<List<Map<String, Object>>> getUsers() {
+		List<Map<String, Object>> users = userService.getUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 
 	}
