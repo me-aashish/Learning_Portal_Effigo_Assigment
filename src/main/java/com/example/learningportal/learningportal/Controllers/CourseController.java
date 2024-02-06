@@ -72,8 +72,8 @@ public class CourseController {
 	}
 
 	@GetMapping("/course")
-	public ResponseEntity<List<Course>> getSearchedCourse(@RequestBody CourseDTO courseDTO) {
-		List<Course> courses = courseService.getSearchedCourses(courseDTO);
+	public ResponseEntity<Optional<CourseResponseDTO>> getSearchedCourse(@RequestBody CourseDTO courseDTO) {
+		Optional<CourseResponseDTO> courses = courseService.getSearchedCourses(courseDTO);
 
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
