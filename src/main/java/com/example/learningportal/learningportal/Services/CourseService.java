@@ -1,0 +1,34 @@
+package com.example.learningportal.learningportal.Services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.learningportal.learningportal.DTO.CourseDTO;
+import com.example.learningportal.learningportal.Entities.Course;
+import com.example.learningportal.learningportal.Entities.User;
+import com.example.learningportal.learningportal.Mappers.CoursePopulator;
+import com.example.learningportal.learningportal.Repositories.CourseRespository;
+import com.example.learningportal.learningportal.Repositories.UserRepository;
+
+@Service
+public class CourseService {
+
+	@Autowired
+	CourseRespository courseRespository;
+
+	@Autowired
+	UserRepository userRepository;
+
+	public Course addCourse(CourseDTO courseDTO) {
+		Optional<User> optionalUser = userRepository.findById(courseDTO.getAuthorId());
+		Course course = CoursePopulator.INSTANCE.populateCourse(courseDTO);
+		if (optionalUser.isPresent()) {
+			User author = optionalUser.get();
+			course.setAuthor(author);
+		}
+		return courseRespository.save(course);
+
+	}
+}

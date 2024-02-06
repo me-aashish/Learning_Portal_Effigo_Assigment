@@ -1,5 +1,7 @@
 package com.example.learningportal.learningportal.Services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +19,18 @@ public class UserService {
 	public User addUser(UserDTO userDTO) {
 		User user = UserPopulator.INSTANCE.populateUser(userDTO);
 		return userRepository.save(user);
+	}
+
+	public User getAuthorByIdAndRole(int authorId, String str) {
+		Optional<User> optionalUser = userRepository.findById(authorId);
+
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
+			if (user.getRole().equals(str)) {
+				return user;
+			}
+		}
+
+		return null;
 	}
 }
