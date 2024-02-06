@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.learningportal.learningportal.DTO.CourseDTO;
+import com.example.learningportal.learningportal.DTO.courseResponseDTO;
 import com.example.learningportal.learningportal.Entities.Course;
 import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Mappers.CoursePopulator;
@@ -24,14 +25,17 @@ public class CourseService {
 	@Autowired
 	UserRepository userRepository;
 
-	public Course addCourse(CourseDTO courseDTO) {
+	public courseResponseDTO addCourse(CourseDTO courseDTO) {
 		Optional<User> optionalUser = userRepository.findById(courseDTO.getAuthorId());
 		Course course = CoursePopulator.INSTANCE.populateCourse(courseDTO);
 		if (optionalUser.isPresent()) {
 			User author = optionalUser.get();
 			course.setAuthor(author);
 		}
-		return courseRespository.save(course);
+		courseRespository.save(course);
+		courseResponseDTO courseResponseDTO = CoursePopulator.INSTANCE.courseEntityToDTO(course);
+		courseResponseDTO.setAuthorId(course.getAuthor().getId());
+		return courseResponseDTO;
 
 	}
 
