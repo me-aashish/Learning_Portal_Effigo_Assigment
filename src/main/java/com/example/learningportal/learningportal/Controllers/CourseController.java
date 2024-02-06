@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.learningportal.learningportal.DTO.CourseDTO;
-import com.example.learningportal.learningportal.DTO.courseResponseDTO;
+import com.example.learningportal.learningportal.DTO.CourseResponseDTO;
 import com.example.learningportal.learningportal.Entities.Course;
 import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Repositories.CourseRespository;
@@ -37,7 +37,7 @@ public class CourseController {
 	CourseRespository courseRespository;
 
 	@PostMapping("/courses")
-	public ResponseEntity<courseResponseDTO> addCourse(@RequestBody CourseDTO courseDTO) {
+	public ResponseEntity<CourseResponseDTO> addCourse(@RequestBody CourseDTO courseDTO) {
 		User author = userService.getAuthorByIdAndRole(courseDTO.getAuthorId(), "AUTHOR");
 		if (author == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -61,16 +61,15 @@ public class CourseController {
 	}
 
 	@GetMapping("/courses")
-	public ResponseEntity<List<Course>> getCourses() {
+	public ResponseEntity<List<CourseDTO>> getCourses() {
 
-		List<Course> courses = courseService.getCourses();
+		List<CourseDTO> courses = courseService.getCourses();
 
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 
 	@GetMapping("/course")
 	public ResponseEntity<List<Course>> getSearchedCourse(@RequestBody CourseDTO courseDTO) {
-
 		List<Course> courses = courseService.getSearchedCourses(courseDTO);
 
 		return new ResponseEntity<>(courses, HttpStatus.OK);

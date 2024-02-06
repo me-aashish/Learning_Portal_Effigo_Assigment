@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.learningportal.learningportal.DTO.CourseDTO;
-import com.example.learningportal.learningportal.DTO.courseResponseDTO;
+import com.example.learningportal.learningportal.DTO.CourseResponseDTO;
 import com.example.learningportal.learningportal.Entities.Course;
 import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Mappers.CoursePopulator;
@@ -25,7 +25,7 @@ public class CourseService {
 	@Autowired
 	UserRepository userRepository;
 
-	public courseResponseDTO addCourse(CourseDTO courseDTO) {
+	public CourseResponseDTO addCourse(CourseDTO courseDTO) {
 		Optional<User> optionalUser = userRepository.findById(courseDTO.getAuthorId());
 		Course course = CoursePopulator.INSTANCE.populateCourse(courseDTO);
 		if (optionalUser.isPresent()) {
@@ -33,7 +33,7 @@ public class CourseService {
 			course.setAuthor(author);
 		}
 		courseRespository.save(course);
-		courseResponseDTO courseResponseDTO = CoursePopulator.INSTANCE.courseEntityToDTO(course);
+		CourseResponseDTO courseResponseDTO = CoursePopulator.INSTANCE.courseEntityToDTO(course);
 		courseResponseDTO.setAuthorId(course.getAuthor().getId());
 		return courseResponseDTO;
 
@@ -53,9 +53,8 @@ public class CourseService {
 
 	}
 
-	public List<Course> getCourses() {
-		List<Course> course = courseRespository.findAll();
-		return course;
+	public List<CourseDTO> getCourses() {
+		return courseRespository.getCourses();
 	}
 
 	public List<Course> getSearchedCourses(CourseDTO courseDTO) {

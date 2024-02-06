@@ -45,4 +45,5 @@ public class Course {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	@JsonIgnore
 	List<Enrollment> enrollments;
+
 }
