@@ -36,8 +36,14 @@ public class User {
 	@Column(name = "role")
 	private String role;
 
+	//for user to courses
 	@OneToMany(mappedBy = "author")
 	@JsonIgnore
 	List<Course> courses;
+
+	//for user to enrollments
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	List<Enrollment> enrollments;
 
 }

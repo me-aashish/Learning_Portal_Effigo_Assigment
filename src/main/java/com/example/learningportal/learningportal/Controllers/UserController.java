@@ -1,10 +1,13 @@
 package com.example.learningportal.learningportal.Controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +30,12 @@ public class UserController {
 	public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
 		log.info("request body", userDTO);
 		return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.CREATED);
+	}
+
+	@GetMapping("/users")
+	public ResponseEntity<List<User>> getUsers() {
+		List<User> users = userService.getUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+
 	}
 }
