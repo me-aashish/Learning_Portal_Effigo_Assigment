@@ -1,5 +1,6 @@
 package com.example.learningportal.learningportal.Services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import com.example.learningportal.learningportal.Entities.User;
 import com.example.learningportal.learningportal.Mappers.CoursePopulator;
 import com.example.learningportal.learningportal.Repositories.CourseRespository;
 import com.example.learningportal.learningportal.Repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CourseService {
@@ -30,5 +33,24 @@ public class CourseService {
 		}
 		return courseRespository.save(course);
 
+	}
+
+	@Transactional
+	public void updateCourse(int courseId, CourseDTO courseDTO) {
+		Optional<Course> optionalCourse = courseRespository.findById(courseId);
+
+		if (optionalCourse.isEmpty())
+			return;
+
+		Course course = optionalCourse.get();
+		course.setCourseDescription(courseDTO.getCourseDescription());
+		course.setCourseTitle(courseDTO.getCourseTitle());
+		courseRespository.save(course);
+
+	}
+
+	public List<Course> getCourses() {
+		List<Course> course = courseRespository.findAll();
+		return course;
 	}
 }

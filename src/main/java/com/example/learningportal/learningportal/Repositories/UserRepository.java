@@ -8,6 +8,4 @@ import com.example.learningportal.learningportal.Entities.User;
 @Repository
 public interface UserRepository extends JpaRepositoryImplementation<User, Integer> {
 
-	//	User findByIdAndRole(int authorId, String str);
-
 }

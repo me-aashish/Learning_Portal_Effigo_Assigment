@@ -23,7 +23,6 @@ public class UserService {
 
 	public User getAuthorByIdAndRole(int authorId, String str) {
 		Optional<User> optionalUser = userRepository.findById(authorId);
-
 		if (optionalUser.isPresent()) {
 			User user = optionalUser.get();
 			if (user.getRole().equals(str)) {
