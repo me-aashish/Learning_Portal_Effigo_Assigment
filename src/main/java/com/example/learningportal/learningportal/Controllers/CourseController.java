@@ -66,4 +66,12 @@ public class CourseController {
 
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
+
+	@GetMapping("/course")
+	public ResponseEntity<List<Course>> getSearchedCourse(@RequestBody CourseDTO courseDTO) {
+
+		List<Course> courses = courseService.getSearchedCourses(courseDTO);
+
+		return new ResponseEntity<>(courses, HttpStatus.OK);
+	}
 }

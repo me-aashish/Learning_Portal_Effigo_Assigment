@@ -53,4 +53,8 @@ public class CourseService {
 		List<Course> course = courseRespository.findAll();
 		return course;
 	}
+
+	public List<Course> getSearchedCourses(CourseDTO courseDTO) {
+		return courseRespository.findByTitle(courseDTO.getCourseTitle());
+	}
 }
