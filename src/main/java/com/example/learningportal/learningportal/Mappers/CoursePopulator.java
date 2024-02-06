@@ -1,6 +1,7 @@
 package com.example.learningportal.learningportal.Mappers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -18,4 +19,7 @@ public interface CoursePopulator {
 	CourseResponseDTO courseEntityToDTO(Course course);
 
 	List<CourseResponseDTO> courseListEntityToDTO(List<Course> courses);
+
+	CourseResponseDTO optionalCourseEntityToDTO(Optional<Course> course);
+
 }

@@ -19,6 +19,7 @@ import com.example.learningportal.learningportal.DTO.CourseDTO;
 import com.example.learningportal.learningportal.DTO.CourseResponseDTO;
 import com.example.learningportal.learningportal.Entities.Course;
 import com.example.learningportal.learningportal.Entities.User;
+import com.example.learningportal.learningportal.Mappers.CoursePopulator;
 import com.example.learningportal.learningportal.Repositories.CourseRespository;
 import com.example.learningportal.learningportal.Services.CourseService;
 import com.example.learningportal.learningportal.Services.UserService;
@@ -48,15 +49,17 @@ public class CourseController {
 	}
 
 	@PutMapping("/courses/{courseId}")
-	public ResponseEntity<Course> updateCourse(@PathVariable int courseId, @RequestBody CourseDTO courseDTO) {
+	public ResponseEntity<CourseResponseDTO> updateCourse(@PathVariable int courseId,
+			@RequestBody CourseDTO courseDTO) {
 		System.out.println(courseId);
 
 		Optional<Course> course = courseRespository.findById(courseId);
 		if (course == null)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
 		courseService.updateCourse(courseId, courseDTO);
-
-		return new ResponseEntity<>(course.get(), HttpStatus.OK);
+		CourseResponseDTO courseResponseDTO = CoursePopulator.INSTANCE.courseEntityToDTO(course.get());
+		courseResponseDTO.setAuthorId(course.get().getAuthor().getId());
+		return new ResponseEntity<>(courseResponseDTO, HttpStatus.OK);
 
 	}
 
