@@ -75,6 +75,8 @@ public class CourseController {
 	public ResponseEntity<Optional<CourseResponseDTO>> getSearchedCourse(@RequestBody CourseDTO courseDTO) {
 		Optional<CourseResponseDTO> courses = courseService.getSearchedCourses(courseDTO);
 
+		if (courses.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 }
