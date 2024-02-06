@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.learningportal.learningportal.DTO.EnrollmentDTO;
-import com.example.learningportal.learningportal.Entities.Enrollment;
+import com.example.learningportal.learningportal.DTO.EnrollmentResponseDTO;
 import com.example.learningportal.learningportal.Services.EnrollmentService;
 
 @RestController
@@ -21,9 +21,9 @@ public class EnrollmentController {
 	EnrollmentService enrollmentService;
 
 	@PostMapping("/enrollments")
-	public ResponseEntity<Enrollment> addEnrollment(@RequestBody EnrollmentDTO enrollmentDTO) {
+	public ResponseEntity<EnrollmentResponseDTO> addEnrollment(@RequestBody EnrollmentDTO enrollmentDTO) {
 
-		Enrollment enrollment = enrollmentService.addEnrollemnt(enrollmentDTO);
+		EnrollmentResponseDTO enrollment = enrollmentService.addEnrollemnt(enrollmentDTO);
 
 		if (enrollment == null)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course or user with given ids not found");

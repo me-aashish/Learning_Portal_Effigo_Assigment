@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.learningportal.learningportal.DTO.EnrollmentDTO;
+import com.example.learningportal.learningportal.DTO.EnrollmentResponseDTO;
 import com.example.learningportal.learningportal.Entities.Course;
 import com.example.learningportal.learningportal.Entities.Enrollment;
 import com.example.learningportal.learningportal.Entities.User;
@@ -26,7 +27,7 @@ public class EnrollmentService {
 	@Autowired
 	CourseRespository courseRespository;
 
-	public Enrollment addEnrollemnt(EnrollmentDTO enrollmentDTO) {
+	public EnrollmentResponseDTO addEnrollemnt(EnrollmentDTO enrollmentDTO) {
 
 		Optional<User> optionalUser = userRepository.findById(enrollmentDTO.getUserId());
 		Optional<Course> optionalCourse = courseRespository.findById(enrollmentDTO.getCourseId());
@@ -41,7 +42,16 @@ public class EnrollmentService {
 		enrollment.setUser(user);
 		enrollment.setCourse(course);
 
-		return enrollmentRepository.save(enrollment);
+		enrollmentRepository.save(enrollment);
 
+		EnrollmentResponseDTO enrollmentResponseDTO = EnrollmentPopulator.INSTANCE.enrollmentEntityToDTO(enrollment);
+		enrollmentResponseDTO.setCourseId(course.getId());
+		enrollmentResponseDTO.setUserId(user.getId());
+		enrollmentResponseDTO.setUserName(user.getUserName());
+		enrollmentResponseDTO.setCourseTitle(course.getCourseTitle());
+		enrollmentResponseDTO.setCourseDescription(course.getCourseDescription());
+		enrollmentResponseDTO.setEnrollmentDate(enrollment.getEnrollmentDate());
+
+		return enrollmentResponseDTO;
 	}
 }

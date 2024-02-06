@@ -35,6 +35,10 @@ public class Enrollment {
 		this.enrollmentDate = new Timestamp(System.currentTimeMillis());
 	}
 
+	public Timestamp getEnrollmentDate() {
+		return this.enrollmentDate;
+	}
+
 	//for enrollments to user
 	@ManyToOne
 	@JoinColumn(name = "user_id")
