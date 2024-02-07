@@ -3,7 +3,9 @@ package com.example.learningportal.learningportal.Services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.learningportal.learningportal.DTO.EnrollmentDTO;
 import com.example.learningportal.learningportal.DTO.EnrollmentResponseDTO;
@@ -38,7 +40,12 @@ public class EnrollmentService {
 		User user = optionalUser.get();
 		Course course = optionalCourse.get();
 
+		if (enrollmentRepository.existsByUserIdAndCourseId(user.getId(), course.getId())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already enrolled");
+		}
+
 		Enrollment enrollment = EnrollmentPopulator.INSTANCE.populateEnrollment(enrollmentDTO);
+
 		enrollment.setUser(user);
 		enrollment.setCourse(course);
 
