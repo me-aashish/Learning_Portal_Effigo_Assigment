@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -46,4 +47,6 @@ public class Course {
 	@JsonIgnore
 	List<Enrollment> enrollments;
 
+	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+	List<Favourite> favourites;
 }
