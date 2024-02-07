@@ -5,6 +5,7 @@ import org.mapstruct.factory.Mappers;
 
 import com.example.learningportal.learningportal.DTO.EnrollmentDTO;
 import com.example.learningportal.learningportal.DTO.EnrollmentResponseDTO;
+import com.example.learningportal.learningportal.DTO.FavouriteResponseDTO;
 import com.example.learningportal.learningportal.Entities.Enrollment;
 
 @Mapper
@@ -14,4 +15,6 @@ public interface EnrollmentPopulator {
 	Enrollment populateEnrollment(EnrollmentDTO enrollmentDTO);
 
 	EnrollmentResponseDTO enrollmentEntityToDTO(Enrollment enrollment);
+
+	FavouriteResponseDTO favouriteResponseEntityToDTO(Enrollment enrollment);
 }

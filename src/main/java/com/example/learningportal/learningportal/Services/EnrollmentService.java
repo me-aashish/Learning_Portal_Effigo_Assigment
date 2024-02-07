@@ -61,4 +61,34 @@ public class EnrollmentService {
 
 		return enrollmentResponseDTO;
 	}
+
+	public EnrollmentResponseDTO addFavourite(EnrollmentDTO enrollmentDTO) {
+
+		Optional<User> optionalUser = userRepository.findById(enrollmentDTO.getUserId());
+		Optional<Course> optionalCourse = courseRespository.findById(enrollmentDTO.getCourseId());
+		Optional<Enrollment> optionalEnrollment = enrollmentRepository.findById(enrollmentDTO.getId());
+
+		if (optionalUser.isEmpty() || optionalCourse.isEmpty() || optionalEnrollment.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User or course not found");
+
+		User user = optionalUser.get();
+		Course course = optionalCourse.get();
+		Enrollment enrollment = optionalEnrollment.get();
+
+		if (enrollmentRepository.isAlreadyFavourite(user.getId(), course.getId()))
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already marked as favourite");
+
+		enrollment.setFavourite(true);
+		enrollment.setCourse(course);
+		enrollment.setUser(user);
+		enrollmentRepository.save(enrollment);
+		EnrollmentResponseDTO enrollmentResponseDTO = EnrollmentPopulator.INSTANCE.enrollmentEntityToDTO(enrollment);
+		enrollmentResponseDTO.setCourseId(course.getId());
+		enrollmentResponseDTO.setUserId(user.getId());
+		enrollmentResponseDTO.setUserName(user.getUserName());
+		enrollmentResponseDTO.setCourseTitle(course.getCourseTitle());
+		enrollmentResponseDTO.setCourseDescription(course.getCourseDescription());
+		return enrollmentResponseDTO;
+
+	}
 }

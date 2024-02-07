@@ -18,4 +18,6 @@ public class EnrollmentResponseDTO {
 	private String courseDescription;
 
 	private Timestamp enrollmentDate;
+
+	private boolean isFavourite;
 }

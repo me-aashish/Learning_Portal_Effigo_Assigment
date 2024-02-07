@@ -31,4 +31,15 @@ public class EnrollmentController {
 		return new ResponseEntity<>(enrollment, HttpStatus.CREATED);
 	}
 
+	@PostMapping("/favourites")
+	public ResponseEntity<EnrollmentResponseDTO> addFavourite(@RequestBody EnrollmentDTO enrollmentDTO) {
+
+		EnrollmentResponseDTO enrollmentResponseDTO = enrollmentService.addFavourite(enrollmentDTO);
+
+		if (enrollmentResponseDTO == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+
+		return new ResponseEntity<>(enrollmentResponseDTO, HttpStatus.OK);
+	}
+
 }

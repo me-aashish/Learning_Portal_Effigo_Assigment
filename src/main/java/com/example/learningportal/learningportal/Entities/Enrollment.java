@@ -30,6 +30,9 @@ public class Enrollment {
 	@Column(name = "enrollment_date")
 	private Timestamp enrollmentDate;
 
+	@Column(name = "is_favourite")
+	private boolean isFavourite;
+
 	@PrePersist
 	public void prePersist() {
 		this.enrollmentDate = new Timestamp(System.currentTimeMillis());
