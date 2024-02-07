@@ -75,10 +75,12 @@ public class EnrollmentService {
 		Course course = optionalCourse.get();
 		Enrollment enrollment = optionalEnrollment.get();
 
-		if (enrollmentRepository.isAlreadyFavourite(user.getId(), course.getId()))
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already marked as favourite");
+		if (enrollmentRepository.isAlreadyFavourite(user.getId(), course.getId())) {
 
-		enrollment.setFavourite(true);
+			enrollment.setFavourite(false);
+		} else
+			enrollment.setFavourite(true);
+
 		enrollment.setCourse(course);
 		enrollment.setUser(user);
 		enrollmentRepository.save(enrollment);
