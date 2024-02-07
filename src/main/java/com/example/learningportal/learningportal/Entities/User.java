@@ -47,8 +47,4 @@ public class User {
 	@JsonIgnore
 	List<Enrollment> enrollments;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonIgnore
-	List<Favourite> favourites;
-
 }
