@@ -1,5 +1,7 @@
 package com.example.learningportal.learningportal.Mappers;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -17,4 +19,6 @@ public interface EnrollmentPopulator {
 	EnrollmentResponseDTO enrollmentEntityToDTO(Enrollment enrollment);
 
 	FavouriteResponseDTO favouriteResponseEntityToDTO(Enrollment enrollment);
+
+	List<EnrollmentResponseDTO> enrollmentListEntityToDTOList(List<Enrollment> enrollments);
 }

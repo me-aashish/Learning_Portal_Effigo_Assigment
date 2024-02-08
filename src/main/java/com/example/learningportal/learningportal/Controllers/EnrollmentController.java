@@ -1,8 +1,12 @@
 package com.example.learningportal.learningportal.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +43,17 @@ public class EnrollmentController {
 		if (enrollmentResponseDTO == null)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
 
-		return new ResponseEntity<>(enrollmentResponseDTO, HttpStatus.OK);
+		return new ResponseEntity<>(enrollmentResponseDTO, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/favourites/{userId}")
+	public ResponseEntity<List<EnrollmentResponseDTO>> findFavouritedByUserId(@PathVariable int userId) {
+
+		List<EnrollmentResponseDTO> enrollmentResponseDTOs = enrollmentService.findAllFavoritesByUserId(userId);
+
+		if (enrollmentResponseDTOs == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+		return new ResponseEntity<>(enrollmentResponseDTOs, HttpStatus.OK);
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.example.learningportal.learningportal.Services;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import com.example.learningportal.learningportal.Repositories.UserRepository;
 
 @Service
 public class EnrollmentService {
+
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(EnrollmentService.class);
 
 	@Autowired
 	EnrollmentRepository enrollmentRepository;
@@ -92,5 +96,22 @@ public class EnrollmentService {
 		enrollmentResponseDTO.setCourseDescription(course.getCourseDescription());
 		return enrollmentResponseDTO;
 
+	}
+
+	public List<EnrollmentResponseDTO> findAllFavoritesByUserId(int userId) {
+
+		Optional<User> optionalUser = userRepository.findById(userId);
+
+		if (optionalUser.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+
+		User user = optionalUser.get();
+
+		List<Enrollment> favouriteByUserIdEntityList = enrollmentRepository.findAllFavoritesByUserId(userId);
+
+		List<EnrollmentResponseDTO> favouriteByUserIdDTOList = EnrollmentPopulator.INSTANCE
+				.enrollmentListEntityToDTOList(favouriteByUserIdEntityList);
+
+		return favouriteByUserIdDTOList;
 	}
 }
